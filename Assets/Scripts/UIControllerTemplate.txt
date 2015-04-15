@@ -1,0 +1,45 @@
+using System.Collections;
+using UnityEngine;
+using UIFrameWork;
+
+/**=============================================================
+ * <summary> 確認視窗 </summary>
+ * 
+ * <author>Neymar Liu</author>
+ * <date>$time$</date>
+ * 
+ * Copyright (c) 2014 All Rights Reserved
+ =============================================================*/
+
+public class UIDialogController : UIController
+{
+	private static UIDialogController _instance = null;
+
+	/**=============================================
+	 * 取得 Singleton
+	 * ===========================================*/
+	public static UIDialogController instance
+	{
+		get
+		{
+			if(_instance == null)
+				_instance = UIManager.instance.GetUI<UIDialogController>();
+
+			return _instance;
+		}
+	}
+
+	override public void Open(params object[] values)
+	{		
+		base.Open();
+		
+		// do Something
+	}
+	
+	override public void Close()
+	{		
+		// do Something
+		
+		base.Close();
+	}
+}

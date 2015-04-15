@@ -1,0 +1,4 @@
+{"200001":{"Type":2,"Name":"遊戲幣","Act":"遊戲幣圖","Max":9999999,"ClientVar":"coin","ServerVar":"coin"},
+"200002":{"Type":2,"Name":"商城幣","Act":"商城幣圖","Max":9999,"ClientVar":"gold","ServerVar":"gold"},
+"200003":{"Type":2,"Name":"經驗值","Act":"經驗值圖","Max":999999,"ClientVar":"exp","ServerVar":"exp"}
+}

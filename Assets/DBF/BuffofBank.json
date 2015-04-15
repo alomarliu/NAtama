@@ -1,0 +1,17 @@
+{"400":{"Lv":0,"Type":4,"RequireLv":2,"Time":20,"Require":[{"ItemID":200001,"Value":500},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":1},"Coin":1,"SaveTime":60},
+"401":{"Lv":1,"Type":4,"RequireLv":4,"Time":30,"Require":[{"ItemID":200001,"Value":1000},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":2},"Coin":2,"SaveTime":90},
+"402":{"Lv":2,"Type":4,"RequireLv":6,"Time":40,"Require":[{"ItemID":200001,"Value":2000},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":3},"Coin":3,"SaveTime":120},
+"403":{"Lv":3,"Type":4,"RequireLv":8,"Time":50,"Require":[{"ItemID":200001,"Value":4000},{"ItemID":200002,"Value":1}],"Immediate":{"ItemID":200002,"Value":4},"Coin":4,"SaveTime":150},
+"404":{"Lv":4,"Type":4,"RequireLv":10,"Time":60,"Require":[{"ItemID":200001,"Value":8000},{"ItemID":200002,"Value":2}],"Immediate":{"ItemID":200002,"Value":5},"Coin":5,"SaveTime":180},
+"405":{"Lv":5,"Type":4,"RequireLv":12,"Time":70,"Require":[{"ItemID":200001,"Value":16000},{"ItemID":200002,"Value":3}],"Immediate":{"ItemID":200002,"Value":6},"Coin":6,"SaveTime":210},
+"406":{"Lv":6,"Type":4,"RequireLv":14,"Time":80,"Require":[{"ItemID":200001,"Value":40000},{"ItemID":200002,"Value":4}],"Immediate":{"ItemID":200002,"Value":7},"Coin":7,"SaveTime":240},
+"407":{"Lv":7,"Type":4,"RequireLv":16,"Time":90,"Require":[{"ItemID":200001,"Value":80000},{"ItemID":200002,"Value":5}],"Immediate":{"ItemID":200002,"Value":8},"Coin":8,"SaveTime":270},
+"408":{"Lv":8,"Type":4,"RequireLv":18,"Time":100,"Require":[{"ItemID":200001,"Value":160000},{"ItemID":200002,"Value":6}],"Immediate":{"ItemID":200002,"Value":9},"Coin":9,"SaveTime":300},
+"409":{"Lv":9,"Type":4,"RequireLv":20,"Time":110,"Require":[{"ItemID":200001,"Value":400000},{"ItemID":200002,"Value":7}],"Immediate":{"ItemID":200002,"Value":10},"Coin":10,"SaveTime":330},
+"410":{"Lv":10,"Type":4,"RequireLv":22,"Time":120,"Require":[{"ItemID":200001,"Value":800000},{"ItemID":200002,"Value":8}],"Immediate":{"ItemID":200002,"Value":11},"Coin":11,"SaveTime":360},
+"411":{"Lv":11,"Type":4,"RequireLv":24,"Time":130,"Require":[{"ItemID":200001,"Value":1600000},{"ItemID":200002,"Value":9}],"Immediate":{"ItemID":200002,"Value":12},"Coin":12,"SaveTime":390},
+"412":{"Lv":12,"Type":4,"RequireLv":26,"Time":140,"Require":[{"ItemID":200001,"Value":4000000},{"ItemID":200002,"Value":10}],"Immediate":{"ItemID":200002,"Value":13},"Coin":13,"SaveTime":420},
+"413":{"Lv":13,"Type":4,"RequireLv":28,"Time":150,"Require":[{"ItemID":200001,"Value":8000000},{"ItemID":200002,"Value":11}],"Immediate":{"ItemID":200002,"Value":14},"Coin":14,"SaveTime":450},
+"414":{"Lv":14,"Type":4,"RequireLv":30,"Time":160,"Require":[{"ItemID":200001,"Value":16000000},{"ItemID":200002,"Value":12}],"Immediate":{"ItemID":200002,"Value":15},"Coin":15,"SaveTime":480},
+"415":{"Lv":15,"Type":4,"RequireLv":0,"Time":0,"Require":[{"ItemID":0,"Value":0},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":0,"Value":0},"Coin":0,"SaveTime":0}
+}

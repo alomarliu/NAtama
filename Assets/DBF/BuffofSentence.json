@@ -1,0 +1,17 @@
+{"500":{"Lv":0,"Type":5,"RequireLv":2,"Time":20,"Require":[{"ItemID":200001,"Value":500},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":1},"BuffValue":5},
+"501":{"Lv":1,"Type":5,"RequireLv":4,"Time":30,"Require":[{"ItemID":200001,"Value":1000},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":2},"BuffValue":6},
+"502":{"Lv":2,"Type":5,"RequireLv":6,"Time":40,"Require":[{"ItemID":200001,"Value":2000},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":3},"BuffValue":7},
+"503":{"Lv":3,"Type":5,"RequireLv":8,"Time":50,"Require":[{"ItemID":200001,"Value":3000},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":4},"BuffValue":8},
+"504":{"Lv":4,"Type":5,"RequireLv":10,"Time":60,"Require":[{"ItemID":200001,"Value":4000},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":200002,"Value":5},"BuffValue":9},
+"505":{"Lv":5,"Type":5,"RequireLv":12,"Time":70,"Require":[{"ItemID":200001,"Value":5000},{"ItemID":200002,"Value":1}],"Immediate":{"ItemID":200002,"Value":6},"BuffValue":10},
+"506":{"Lv":6,"Type":5,"RequireLv":14,"Time":80,"Require":[{"ItemID":200001,"Value":10000},{"ItemID":200002,"Value":2}],"Immediate":{"ItemID":200002,"Value":7},"BuffValue":11},
+"507":{"Lv":7,"Type":5,"RequireLv":16,"Time":90,"Require":[{"ItemID":200001,"Value":12000},{"ItemID":200002,"Value":3}],"Immediate":{"ItemID":200002,"Value":8},"BuffValue":12},
+"508":{"Lv":8,"Type":5,"RequireLv":18,"Time":100,"Require":[{"ItemID":200001,"Value":14000},{"ItemID":200002,"Value":4}],"Immediate":{"ItemID":200002,"Value":9},"BuffValue":13},
+"509":{"Lv":9,"Type":5,"RequireLv":20,"Time":110,"Require":[{"ItemID":200001,"Value":16000},{"ItemID":200002,"Value":5}],"Immediate":{"ItemID":200002,"Value":10},"BuffValue":14},
+"510":{"Lv":10,"Type":5,"RequireLv":22,"Time":120,"Require":[{"ItemID":200001,"Value":18000},{"ItemID":200002,"Value":6}],"Immediate":{"ItemID":200002,"Value":11},"BuffValue":15},
+"511":{"Lv":11,"Type":5,"RequireLv":24,"Time":130,"Require":[{"ItemID":200001,"Value":20000},{"ItemID":200002,"Value":7}],"Immediate":{"ItemID":200002,"Value":12},"BuffValue":16},
+"512":{"Lv":12,"Type":5,"RequireLv":26,"Time":140,"Require":[{"ItemID":200001,"Value":40000},{"ItemID":200002,"Value":8}],"Immediate":{"ItemID":200002,"Value":13},"BuffValue":17},
+"513":{"Lv":13,"Type":5,"RequireLv":28,"Time":150,"Require":[{"ItemID":200001,"Value":80000},{"ItemID":200002,"Value":9}],"Immediate":{"ItemID":200002,"Value":14},"BuffValue":18},
+"514":{"Lv":14,"Type":5,"RequireLv":30,"Time":160,"Require":[{"ItemID":200001,"Value":160000},{"ItemID":200002,"Value":10}],"Immediate":{"ItemID":200002,"Value":15},"BuffValue":19},
+"515":{"Lv":15,"Type":5,"RequireLv":0,"Time":0,"Require":[{"ItemID":0,"Value":0},{"ItemID":0,"Value":0}],"Immediate":{"ItemID":0,"Value":0},"BuffValue":0}
+}
