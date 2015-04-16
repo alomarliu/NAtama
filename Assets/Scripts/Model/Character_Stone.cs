@@ -12,13 +12,16 @@ public partial class Character : MonoBehaviour
     /// <summary>
     /// 檢查是否可奪石
     /// </summary>
-    /// <returns> 0: 不可 1: 可 2: 全石擁有</returns>
+    /// <returns> 0: 不可 1: 可 2: 全石擁有 3: 該角色未解鎖</returns>
     public static int CheckSnatch(int npcID)
     {
         SnatchStageLib obj = DBFManager.snatchStageLib.Data(npcID) as SnatchStageLib;
 
         if (null == obj)
             return 0;
+
+        if (null == Character.GetNpc(npcID))
+            return 3;
 
         int stoneID = -1;
         int count = 0;
