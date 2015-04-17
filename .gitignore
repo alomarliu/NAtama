@@ -11,6 +11,8 @@
 # Generated files
 bin/
 gen/
+Library/
+ProjectSettings/
 
 # Gradle files
 .gradle/
@@ -25,3 +27,6 @@ proguard/
 
 # Log Files
 *.log
+
+*.csproj
+*.sln
