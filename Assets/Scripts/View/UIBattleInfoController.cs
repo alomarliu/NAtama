@@ -1,4 +1,5 @@
-﻿using Model.DBF;
+﻿using LitJson;
+using Model.DBF;
 using System.Collections;
 using UIFrameWork;
 using UnityEngine;
@@ -34,6 +35,10 @@ public class UIBattleInfoController : UIController
     UISprite _uiNpc1P = null;
     [SerializeField]
     UISprite _uiNpc2P = null;
+    [SerializeField]
+    UISprite _uiWinStoneNpc = null;
+    [SerializeField]
+    UISprite _uiLoseStoneNpc = null;
     [SerializeField]
     UISprite _uiWinStone = null;
     [SerializeField]
@@ -86,8 +91,7 @@ public class UIBattleInfoController : UIController
         _info.winTimes = 5;
          * */
         // 名字
-        _lbName1P.text = Character.ins.playName;
-        _lbName2P.text = "萌妹子";
+        ChangeIconAndName();
 
         // 連續答對
         NGUITools.SetActiveSelf(_lbWinTimes.gameObject, _info.winTimes > 0);
@@ -113,7 +117,7 @@ public class UIBattleInfoController : UIController
         NGUITools.SetActiveSelf(_uiLostStone.gameObject, _info.lostStoneID > 0);
         // 輸了石頭
         NGUITools.SetActiveSelf(_btnSaveStone.gameObject, _info.lostStoneID > 0);
-
+        
         if(_info.lostStoneID > 0)
         {
             ItemBaseData obj = DBFManager.itemObjLib.Data(_info.lostStoneID) as ItemBaseData;
@@ -158,5 +162,80 @@ public class UIBattleInfoController : UIController
     {
         _btnGoHome.enabled = true;
 
+    }
+    
+	/**================================
+	 * <summary> 更換2p圖示 </summary>
+	 *===============================*/
+    void ChangeIconAndName()
+    {        
+        JsonData jd = PlayerPrefManager.instance.GetBattleInfo();
+        int mode = int.Parse(jd["mode"].ToString());
+        int npcID = Character.ins.charID;
+
+        SnatchStageLib obj = DBFManager.snatchStageLib.Data(npcID) as SnatchStageLib;
+
+        // 更新1P角色名稱及圖示
+        if (null != obj)
+        {
+            _lbName1P.text = Character.ins.playName;
+            string uiName = string.Format("Npc{0:000}", obj.GUID);
+            UISprite uiNpc = _uiNpc1P.GetComponent<UISprite>();
+            uiNpc.spriteName = uiName;
+
+            // 更換NPC圖片
+            uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+            uiNpc.MakePixelPerfect();
+            uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+            uiNpc.SetDimensions(300, 200);
+        }
+        
+        npcID = int.Parse(jd["npcID"].ToString());
+
+        switch((Enum_BattleMode)mode)
+        {
+            case Enum_BattleMode.ModeB:
+            case Enum_BattleMode.ModeC:
+                {
+                    ChallengeNpcLib npcObj = DBFManager.challengeNpcLib.Data(npcID) as ChallengeNpcLib;
+
+                    if(null != npcObj)
+                    {                        
+                        _lbName2P.text = npcObj.Name;
+                        string uiName = string.Format("Npc{0:000}", npcObj.GUID);
+                        
+                        UISprite uiNpc = _uiNpc2P.GetComponent<UISprite>();
+                        uiNpc.spriteName = uiName;
+
+                        // 更換NPC圖片
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+                        uiNpc.MakePixelPerfect();
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+                        uiNpc.SetDimensions(300, 200);
+                    }
+                }
+                break;
+            case Enum_BattleMode.ModeA:
+            case Enum_BattleMode.ModeD:
+                {                    
+                    obj = DBFManager.snatchStageLib.Data(npcID) as SnatchStageLib;
+
+                    // 更新角色名稱及圖示
+                    if (null != obj)
+                    {
+                        _lbName2P.text = obj.NAME;
+                        string uiName = string.Format("Npc{0:000}", obj.GUID);
+                        UISprite uiNpc = _uiNpc2P.GetComponent<UISprite>();
+                        uiNpc.spriteName = uiName;
+
+                        // 更換NPC圖片
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+                        uiNpc.MakePixelPerfect();
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+                        uiNpc.SetDimensions(300, 200);
+                    }
+                }
+                break;
+        }
     }
 }

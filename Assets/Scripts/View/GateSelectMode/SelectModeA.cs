@@ -95,8 +95,14 @@ public class SelectModeA : MonoBehaviour , IGateSelectMode
             mode = Enum_BattleMode.ModeC;
             npc = obj.BOSS;
         }
-        else if(gateID <= Character.ins.schoolLv)
-            mode = (npc > 0)? Enum_BattleMode.ModeB : Enum_BattleMode.ModeA;
+        else if (gateID <= Character.ins.schoolLv)
+        {
+            mode = (npc > 0) ? Enum_BattleMode.ModeB : Enum_BattleMode.ModeA;
+
+            // 隨便挑一隻角色
+            if (npc == 0)
+                npc = Random.Range(0, DBFManager.snatchStageLib.Count)+1;
+        }
 
         string tempstr = "";
         int payItemId = -1;
@@ -127,6 +133,8 @@ public class SelectModeA : MonoBehaviour , IGateSelectMode
             UIDialogController.instance.Open(UIDialogController.DialogType.OK, tempstr);
             return;
         }
+        
+        ChallengeNpcLib npcObj = DBFManager.challengeNpcLib.Data(npc) as ChallengeNpcLib;
 
         switch (mode)
         {
@@ -135,12 +143,11 @@ public class SelectModeA : MonoBehaviour , IGateSelectMode
                 break;
             case Enum_BattleMode.ModeB:
                 {
-                    ChallengeNpcLib npcObj = DBFManager.challengeNpcLib.Data(npc) as ChallengeNpcLib;
 
                     if (null != npcObj)
                         Character.ins.winStone = npcObj.ItemID;
 
-                    tempstr = string.Format("確定挑戰{0}號學長?", npc);
+                    tempstr = string.Format("確定挑戰{0}學長?", npcObj.Name);
                 }
                 break;
             case Enum_BattleMode.ModeC:
@@ -149,7 +156,6 @@ public class SelectModeA : MonoBehaviour , IGateSelectMode
                 }
                 break;
         }
-
         
         UIDialogController.instance.Open(UIDialogController.DialogType.OKCancel,
                                          tempstr, "OnConfirm", _uiMain, 
@@ -206,17 +212,44 @@ public class SelectModeA : MonoBehaviour , IGateSelectMode
         NGUITools.SetActiveSelf(t.FindChild("uiKick").gameObject, idx == Character.ins.schoolLv);
         NGUITools.SetActiveSelf(t.FindChild("uiStone").gameObject, idx < Character.ins.schoolLv);
         NGUITools.SetActiveSelf(t.FindChild("lbClickme").gameObject, idx < Character.ins.schoolLv);
-        t.FindChild("uiNPC").GetComponent<UIButton>().isEnabled = idx < Character.ins.schoolLv;
 
+        Transform tNpc = t.FindChild("uiNPC");
+        NGUITools.SetActiveSelf(tNpc.gameObject, idx <= Character.ins.schoolLv);
+        //tNpc.GetComponent<UIButton>().isEnabled = idx < Character.ins.schoolLv;
+        
         // 超過學校解鎖等級的不能點
         t.GetComponent<UIButton>().isEnabled = idx <= Character.ins.schoolLv;
+        
+        // 踢館資訊
+        if(idx == Character.ins.schoolLv)
+        {
+            ChallengeNpcLib npcObj = DBFManager.challengeNpcLib.Data(obj.BOSS) as ChallengeNpcLib;
 
-        if(idx < Character.ins.everyDayNpcs.Length)
+            if (npcObj != null)
+            {
+                UISprite uiSprite = tNpc.GetComponent<UISprite>();
+                // 更換NPC圖片
+                uiSprite.spriteName = npcObj.Pic;
+                uiSprite.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+                uiSprite.MakePixelPerfect();
+                uiSprite.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+                uiSprite.SetDimensions(180, 200);
+            }
+        }
+        else if(idx < Character.ins.everyDayNpcs.Length)
         {
             ChallengeNpcLib npcObj = DBFManager.challengeNpcLib.Data(Character.ins.everyDayNpcs[idx]) as ChallengeNpcLib;
 
             if(npcObj != null)
             {
+                UISprite uiSprite = tNpc.GetComponent<UISprite>();
+                // 更換NPC圖片
+                uiSprite.spriteName = npcObj.Pic;
+                uiSprite.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+                uiSprite.MakePixelPerfect();
+                uiSprite.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+                uiSprite.SetDimensions(180, 200);
+
                 ItemBaseData itemObj = DBFManager.itemObjLib.Data(npcObj.ItemID) as ItemBaseData;
 
                 if (itemObj != null)

@@ -20,6 +20,33 @@ public partial class Character : MonoBehaviour
     static Dictionary<int, NpcInfo> _npcDic = new Dictionary<int, NpcInfo>();
     
     /**========================================
+    * <summary>檢查是否可以選擇該角色</summary>
+    * ======================================*/
+    public static bool CheckSelectNpc(int npcID)
+    {
+        NpcInfo info = null;        
+        _npcDic.TryGetValue(npcID, out info);
+
+        if (null == info)
+            return false;
+
+        return true;
+    }
+    
+    /**========================================
+    * <summary>更換</summary>
+    * ======================================*/
+    public static bool SelectNpc(int npcID)
+    {
+        // 檢查
+        if (!CheckSelectNpc(npcID))
+            return false;
+
+        ins.charID = npcID;
+        return true;
+    }
+
+    /**========================================
     * <summary>檢查Npc升級</summary>
     * ======================================*/
     public static bool CheckNpcLvUp(int npcID)
@@ -30,12 +57,12 @@ public partial class Character : MonoBehaviour
             return false;
 
         ConfigLib configObj = DBFManager.configLib.Data(1) as ConfigLib;
-        NpcInfo info = null;
-
-        _npcDic.TryGetValue(npcID, out info);
+        NpcInfo info = null;        
 
         if (null == configObj)
             return false;
+
+        _npcDic.TryGetValue(npcID, out info);
 
         // 加入
         if (null == info)

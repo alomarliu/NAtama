@@ -38,5 +38,10 @@ namespace NLNetwork
         buffUpgrade                     = 0x300,
         /// <summary>Buff 結束訓練</summary>
         buffUpgradeFinish                ,
+        
+        //==============================================
+        /// Npc相關
+        /// <summary>更換角色</summary>
+        changeRole                      = 0x400,
     }
 }

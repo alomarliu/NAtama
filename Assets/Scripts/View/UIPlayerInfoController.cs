@@ -20,9 +20,16 @@ public class UIPlayerInfoController : UIController
     [SerializeField]
     UILabel _lbPlayerName = null;
     [SerializeField]
+    UILabel _lbNpcName = null;
+    [SerializeField]
     UIGrid _infoGrid = null;
     [SerializeField]
     UIGrid _buffInfoGrid = null;
+    [SerializeField]
+    UISprite _uiNpc = null;
+    /// <summary>NPC等級</summary>
+    [SerializeField]
+    UILabel _lbNpcLv = null;
 
 	/**=============================================
 	 * 取得 Singleton
@@ -37,7 +44,7 @@ public class UIPlayerInfoController : UIController
 			return _instance;
 		}
 	}
-
+    
 	override public void Open(params object[] values)
 	{		
 		base.Open();
@@ -85,6 +92,39 @@ public class UIPlayerInfoController : UIController
         {
             t = childList[i];
             t.FindChild("lbValue").GetComponent<UILabel>().text = values[i];
+        }
+
+        SnatchStageLib obj = DBFManager.snatchStageLib.Data(Character.ins.charID) as SnatchStageLib;
+
+        // 更新角色名稱及圖示
+        if (null != obj)
+        {
+            // 等級
+            _lbNpcLv.text = "Lv" + Character.GetNpc(obj.GUID).lv.ToString();
+
+            _lbNpcName.text = obj.NAME;
+            string uiName = string.Format("Npc{0:000}", obj.GUID);
+            _uiNpc.spriteName = uiName;
+
+            // 更換NPC圖片
+            _uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+            _uiNpc.MakePixelPerfect();
+            _uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+            _uiNpc.SetDimensions(260, 200);
+        }
+    }
+        
+	/**================================
+	 * <summary> Tween結束 </summary>
+	 *===============================*/
+    public void OnTweenEnd()
+    {
+        UITweener tweener = TweenPosition.current;
+
+        if (tweener.direction == AnimationOrTween.Direction.Reverse)
+        {
+            Close();
+            UIChangeNpcController.instance.OpenTween();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using Model.DBF;
 using NLNetwork;
 using System.Collections;
 using UIFrameWork;
@@ -26,6 +27,8 @@ public class UIFindTargetController : UIController
     GameObject _find = null;
     [SerializeField]
     UILabel _lb1PName = null;
+    [SerializeField]
+    GameObject _ui1P = null;
     [SerializeField]
     GameObject _ui2P = null;
     [SerializeField]
@@ -69,12 +72,11 @@ public class UIFindTargetController : UIController
         else
             _bet = (int)values[1];
 
-        _lbBet.text = "0";
-        _lb1PName.text = Character.ins.playName;
-        
+        UpdateUI();
+
         StartCoroutine(FindTarget());
 	}
-    	
+        	
 	override public void Close()
 	{		
 		// do Something
@@ -82,6 +84,31 @@ public class UIFindTargetController : UIController
 		base.Close();
 	}
     
+	/**================================
+	 * <summary> 更新畫面 </summary>
+	 *===============================*/
+    private void UpdateUI()
+    {
+        _lbBet.text = "0";
+        _lb1PName.text = Character.ins.playName;
+        
+        SnatchStageLib obj = DBFManager.snatchStageLib.Data(Character.ins.charID) as SnatchStageLib;
+
+        // 更新角色名稱及圖示
+        if (null != obj)
+        {
+            string uiName = string.Format("Npc{0:000}", obj.GUID);
+            UISprite uiNpc = _ui1P.GetComponent<UISprite>();
+            uiNpc.spriteName = uiName;
+
+            // 更換NPC圖片
+            uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+            uiNpc.MakePixelPerfect();
+            uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+            uiNpc.SetDimensions(460, 200);
+        }
+    }
+
 	/**================================
 	 * <summary> 更新 </summary>
 	 *===============================*/
@@ -178,19 +205,84 @@ public class UIFindTargetController : UIController
         int mode = int.Parse(jd["mode"].ToString());
         int stageID = int.Parse(jd["stageID"].ToString());
         int npcID = int.Parse(jd["npcID"].ToString());
+        
+        // 改變 2PIcon
+        Change2PIcon();
+
+        // 一般模式把ID清0
+        if (mode == (int)Enum_BattleMode.ModeA)
+            npcID = 0;
 
         // 傳送指令
         NetworkLib.instance.SendEnterStage(Character.ins.uid, stageID, npcID, mode);
         
-        // 挑戰級長會扣挑戰次數
         if (mode == (int)Enum_BattleMode.ModeB)
         {
             Character.ins.challengeCount--;
+            // 重新rand一個角色
             npcID = Character.ins.RandStageNpc(stageID);
 
             Character.ins.everyDayNpcs[stageID - 1] = npcID;
             // 寫入暫存
             PlayerPrefManager.instance.SetEveryDayNPC(Character.ins.everyDayNpcs);
+        }
+
+    }
+    
+	/**================================
+	 * <summary> 更換2p圖示 </summary>
+	 *===============================*/
+    void Change2PIcon()
+    {        
+        JsonData jd = PlayerPrefManager.instance.GetBattleInfo();
+        int mode = int.Parse(jd["mode"].ToString());
+        int stageID = int.Parse(jd["stageID"].ToString());
+        int npcID = int.Parse(jd["npcID"].ToString());
+
+        switch((Enum_BattleMode)mode)
+        {
+            case Enum_BattleMode.ModeB:
+            case Enum_BattleMode.ModeC:
+                {
+                    ChallengeNpcLib obj = DBFManager.challengeNpcLib.Data(npcID) as ChallengeNpcLib;
+
+                    if(null != obj)
+                    {                        
+                        _lb2PName.text = obj.Name;
+                        string uiName = string.Format("Npc{0:000}", obj.GUID);
+                        
+                        UISprite uiNpc = _ui2P.GetComponent<UISprite>();
+                        uiNpc.spriteName = uiName;
+
+                        // 更換NPC圖片
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+                        uiNpc.MakePixelPerfect();
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+                        uiNpc.SetDimensions(460, 200);
+                    }
+                }
+                break;
+            case Enum_BattleMode.ModeA:
+            case Enum_BattleMode.ModeD:
+                {                    
+                    SnatchStageLib obj = DBFManager.snatchStageLib.Data(npcID) as SnatchStageLib;
+
+                    // 更新角色名稱及圖示
+                    if (null != obj)
+                    {
+                        _lb2PName.text = obj.NAME;
+                        string uiName = string.Format("Npc{0:000}", obj.GUID);
+                        UISprite uiNpc = _ui2P.GetComponent<UISprite>();
+                        uiNpc.spriteName = uiName;
+
+                        // 更換NPC圖片
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+                        uiNpc.MakePixelPerfect();
+                        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+                        uiNpc.SetDimensions(460, 200);
+                    }
+                }
+                break;
         }
     }
 

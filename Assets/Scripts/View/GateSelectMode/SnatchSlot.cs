@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SnatchSlot : MonoBehaviour 
 {
-    SnatchStageLib _data = null;
+    SnatchStageLib _data = null;    
     
 	/**================================
 	 * <summary> 設定資料 </summary>
@@ -32,6 +32,17 @@ public class SnatchSlot : MonoBehaviour
         UILabel lbLv = t.FindChild("lbLv").GetComponent<UILabel>();
         lbLv.color = new Color(1, 1, 1, 1);
         lbLv.text = (null == npcInfo) ? "[FF0000]未解鎖[-]" : "[344334]Lv" + npcInfo.lv+"[-]";
+        
+        // 更新角色名稱及圖示
+        UISprite uiNpc = t.FindChild("uiNPC").GetComponent<UISprite>();
+        string uiName = string.Format("Npc{0:000}", _data.GUID);
+
+        // 更換NPC圖片
+        uiNpc.spriteName = uiName;
+        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.Free;
+        uiNpc.MakePixelPerfect();
+        uiNpc.keepAspectRatio = UIWidget.AspectRatioSource.BasedOnWidth;
+        uiNpc.SetDimensions(200, 200);
 
         UpdateStone();
     }

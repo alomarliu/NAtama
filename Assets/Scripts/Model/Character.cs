@@ -157,6 +157,7 @@ public partial class Character : MonoBehaviour
         gold = Convert.ToUInt32(accountJD["gold"].ToString());        
         lv = Convert.ToInt32(accountJD["lv"].ToString());
         _exp = Convert.ToUInt32(accountJD["exp"].ToString());
+        charID = Convert.ToInt32(accountJD["now_role"].ToString());
 
         RoleConfigLib roleObj = DBFManager.roleConfigLib.Data(lv) as RoleConfigLib;
         // 取得最大經驗值
@@ -261,7 +262,10 @@ public partial class Character : MonoBehaviour
             PlayerPrefManager.instance.SetEveryDayNPC(everyDayNpcs);
         }
     }
-
+    
+	/**================================
+	 * <summary> 隨機挑NPC </summary>
+	 *===============================*/
     public int RandStageNpc(int stageID)
     {        
         ChallengeStageLib obj = DBFManager.challengeStageLib.Data(stageID) as ChallengeStageLib;

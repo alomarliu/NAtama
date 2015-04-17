@@ -3,9 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UIFrameWork;
 using UnityEngine;
+using NLNetwork;
 
-public class SelectModeB : MonoBehaviour, IGateSelectMode
-{    
+/**=============================================================
+ * <summary> 變更角色介面 </summary>
+ * 
+ * <author>Neymar Liu</author>
+ * <date>$time$</date>
+ * 
+ * Copyright (c) 2015 All Rights Reserved
+ =============================================================*/
+
+public class UIChangeNpcController : UIController
+{
+	private static UIChangeNpcController _instance = null;
+    
     object[] _data = {};
     /// <summary> grid </summary>
     [SerializeField]
@@ -13,13 +25,43 @@ public class SelectModeB : MonoBehaviour, IGateSelectMode
     UIMyWrapContent _wrap = null;
     [SerializeField]
     UIScrollView _scrollView = null;
-    UIController _uiMain = null;
+    
+    [SerializeField]
+    UIBackButton _btnBack = null;
+
+	/**=============================================
+	 * 取得 Singleton
+	 * ===========================================*/
+	public static UIChangeNpcController instance
+	{
+		get
+		{
+			if(_instance == null)
+				_instance = UIManager.instance.GetUI<UIChangeNpcController>();
+
+			return _instance;
+		}
+	}
+
+	override public void Open(params object[] values)
+	{		
+		base.Open();
+
+        UpdateUI();
+	}
+	
+	override public void Close()
+	{		
+		// do Something
+		
+		base.Close();
+	}    
+    
     
     void Awake()
     {                
         _wrap = _dataGrid.GetComponent<UIMyWrapContent>();
         _wrap.onInitializeItem += ItemChange;
-        _uiMain = GetComponentInParent<UIController>();
     }
 
     void OnDestroy()
@@ -59,65 +101,7 @@ public class SelectModeB : MonoBehaviour, IGateSelectMode
         _dataGrid.Reposition();
         _scrollView.ResetPosition();
     }
-    
-	/**================================
-	 * <summary> 關卡選擇 </summary>
-	 *===============================*/
-    public void OnGateSelect(string gate = "", int npc = 0)
-    {        
-        int npcID = int.Parse(UIButton.current.name);
-        SnatchStageLib obj = DBFManager.snatchStageLib.Data(npcID) as SnatchStageLib;
-
-        if (null == obj)
-            return;
-
-        // 檢查是否可奪石
-        int rs = Character.CheckSnatch(npcID);
-        string temp = "";
-
-        switch(rs)
-        {
-            case 0:
-                temp = "角色石不足!";
-                break;
-            case 2:
-                temp = "角色石已滿!";
-                break;
-            case 3:
-                temp = "該角色未解鎖";
-                break;
-        }
-
-        if(!string.IsNullOrEmpty(temp))
-        {
-            UIDialogController.instance.Open(UIDialogController.DialogType.OK,
-                                            temp);
-            return;
-        }
-
-        string tempstr = "";
-
-        tempstr = string.Format("將隨機索取1顆角色石, 確定嗎?");
-
-        UIDialogController.instance.Open(UIDialogController.DialogType.OKCancel,
-                                         tempstr, "OnConfirm", _uiMain, 
-                                         new object[]{npcID});
-    }
-    
-	/**================================
-	 * <summary> 確認 </summary>
-	 *===============================*/
-    public void OnConfirm(DialogOption.OptionType option, params object[] param)
-    {        
-        if (option != DialogOption.OptionType.OK)
-            return;        
-
-        UIFindTargetController.instance.Open();
-
-        // 設定對戰資訊
-        PlayerPrefManager.instance.SetBattleInfo(Enum_BattleMode.ModeD, 0, (int)param[0]);
-    }
-    
+            
 	/**================================
 	 * <summary> Wrap 項目有改變 </summary>
 	 *===============================*/
@@ -132,5 +116,48 @@ public class SelectModeB : MonoBehaviour, IGateSelectMode
             slot.SetData(_data[realIndex] as SnatchStageLib);
             slot.name = (_data[realIndex] as SnatchStageLib).GUID.ToString();
         }
+    }
+
+	/**================================
+	 * <summary> 選擇了npc </summary>
+	 *===============================*/
+    public void OnNpcSelect()
+    {
+        int npcID = int.Parse(UIButton.current.name);
+        SnatchStageLib obj = DBFManager.snatchStageLib.Data(npcID) as SnatchStageLib;
+
+        if (null == obj)
+            return;
+
+        // 檢查角色是否可解鎖
+        if(!Character.CheckSelectNpc(npcID))
+        {
+            UIDialogController.instance.Open(UIDialogController.DialogType.OK,
+                                            "該角色未解鎖");
+            return;
+        }
+
+        string temp = string.Format("確定要更換為{0}嗎?", obj.NAME);
+        
+        // 更換確認
+        UIDialogController.instance.Open(UIDialogController.DialogType.OKCancel,
+                                         temp, "OnConfirm", this, 
+                                         new object[]{npcID});
+    }
+    
+	/**================================
+	 * <summary> 確認 </summary>
+	 *===============================*/
+    public void OnConfirm(DialogOption.OptionType option, params object[] param)
+    {        
+        if (option != DialogOption.OptionType.OK)
+            return;
+
+        int npcID = (int)param[0];
+        Character.SelectNpc(npcID);
+        _btnBack.OnClick();
+
+        // 傳送指令
+        NetworkLib.instance.SendChangeNpc(Character.ins.uid, npcID);
     }
 }
