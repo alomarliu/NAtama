@@ -105,7 +105,11 @@ namespace UIFrameWork
 			if(_isTweening)
 				return;
 
-			UIPlayTween pTween = gameObject.GetComponent<UIPlayTween>();            
+			UIPlayTween pTween = gameObject.GetComponent<UIPlayTween>();
+
+            if (null == pTween)
+                return;
+
             pTween.resetOnPlay = true;
 			pTween.Play(false);
 						

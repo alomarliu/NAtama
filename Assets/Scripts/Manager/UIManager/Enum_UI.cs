@@ -35,6 +35,10 @@ public enum Enum_UI
 	UICashFlowDialog    ,
 	/** BUFF學習加速介面 */
 	UIBuffImme          ,
-	/** 更換NPC */
+	/** 設定介面 */
+	UISetting           ,
+	/** 更換NPC介面 */
 	UIChangeNpc         ,
+	/** 商店介面 */
+	UIShop              ,
 }
