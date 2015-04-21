@@ -127,4 +127,18 @@ public class UIPlayerInfoController : UIController
             UIChangeNpcController.instance.OpenTween();
         }
     }
+
+    /**================================
+     * <summary> OnClick後執行 </summary>
+     * ==============================*/
+    public void OnBtnClick()
+    {
+        UIButton button = UIButton.current;
+
+        if (button.name == "btnSetting")
+        {
+            UISettingController.instance.OpenTween();
+        }
+    }
+
 }
