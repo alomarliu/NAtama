@@ -43,5 +43,10 @@ namespace NLNetwork
         /// Npc相關
         /// <summary>更換角色</summary>
         changeRole                      = 0x400,
+        
+        //==============================================
+        /// 金流相關
+        /// <summary>金流驗證</summary>
+        purchaseVerify                  = 0x500,
     }
 }

@@ -46,6 +46,7 @@ namespace NLNetwork
             RegisterItem();
             RegisterStage();
             RegisterBuff();
+            RegisterShop();
         }
     }
 }

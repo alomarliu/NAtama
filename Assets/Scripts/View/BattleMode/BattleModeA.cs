@@ -289,7 +289,7 @@ public class BattleModeA : MonoBehaviour, IBattleMode
 
         QuestionLib.QuestionType type = (QuestionLib.QuestionType)itor.Current;
 
-        int diffcult = UnityEngine.Random.Range(0, 6) + 1;
+        int diffcult = UnityEngine.Random.Range(0, 5) + 1;
         return QuestionSys.instance.RandQuestion(type, 1, diffcult);
     }
      

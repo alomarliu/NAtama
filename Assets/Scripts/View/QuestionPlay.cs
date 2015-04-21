@@ -94,7 +94,7 @@ public class QuestionPlay : MonoBehaviour
         StartCoroutine(NPCAnswer());
 
         // 等待雙方回答
-        yield return StartCoroutine(WaitAnswer());
+        yield return StartCoroutine(WaitAnswer());                
 
         // 等玩家答題完才顯示NPC回答
         yield return StartCoroutine(ShowNPCAni(_rightStatus == 2));
@@ -198,8 +198,7 @@ public class QuestionPlay : MonoBehaviour
     {
         _lbQuestion.text = questionLib.Question + " ?";
         // 重設逐字打印效果
-        _lbQuestion.GetComponent<TypewriterEffect>().ResetToBeginning();
-                
+        _lbQuestion.GetComponent<TypewriterEffect>().ResetToBeginning();                
 
         NGUITools.SetActiveSelf(_optionGrid.gameObject, questionLib.Type == (int)QuestionType.Sort || questionLib.Type == (int)QuestionType.Choose);
         NGUITools.SetActiveSelf(_typeYorN, questionLib.Type == (int)QuestionType.YorN);

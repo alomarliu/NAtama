@@ -38,6 +38,8 @@ public class DBFManager : MonoBehaviour
 	public static DBFLoader buffTabelLib = new DBFLoader();
 	/** Buff效果表  */
 	public static DBFLoader buffEffectLib = new DBFLoader();
+	/** 商店表  */
+	public static DBFLoader shopLib = new DBFLoader();
 
     /** singleton */
 	private static DBFManager 	_instance   = 	null;
@@ -133,6 +135,9 @@ public class DBFManager : MonoBehaviour
         // Buff效果表(Sentence)
 		asset = assetBundle.Load("BuffofSentence") as TextAsset;
         buffEffectLib.LoadFromText<BuffEffectLib>(asset.text);
+        // 商店表
+		asset = assetBundle.Load("ShopPurchase") as TextAsset;
+        shopLib.LoadFromText<ShopLib>(asset.text);
 	}
 	
 	/**=============================================
@@ -178,6 +183,9 @@ public class DBFManager : MonoBehaviour
         buffEffectLib.Load<BuffEffectLib>("BuffofBank");
         // Buff效果表(Sentence)
         buffEffectLib.Load<BuffEffectLib>("BuffofSentence");
+        
+        // 商店表
+        shopLib.Load<ShopLib>("ShopPurchase");
 	}  
 }
     

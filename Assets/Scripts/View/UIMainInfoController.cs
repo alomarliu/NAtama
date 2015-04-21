@@ -82,4 +82,17 @@ public class UIMainInfoController : UIController
     {
         Character.ins.AddExp(50);
     }
+
+    public void OnBtnBuyClick()
+    {
+        switch(UIButton.current.name)
+        {
+            case "btnBuyCoin":
+                UIShopController.instance.OpenTween(UIShopController.Type.Coin);
+                break;
+            case "btnBuyGold":
+                UIShopController.instance.OpenTween(UIShopController.Type.Gold);
+                break;
+        }
+    }
 }
