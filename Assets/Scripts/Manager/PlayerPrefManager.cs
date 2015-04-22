@@ -7,6 +7,8 @@ public class PlayerPrefManager : MonoBehaviour
     /** singleton */
 	private static PlayerPrefManager _instance   = 	null;
 	
+    public enum SettingsName { music = 0, sound, vibrate, conversation } 
+
 	void Awake()
     {        
 		if(_instance == null)
@@ -136,7 +138,7 @@ public class PlayerPrefManager : MonoBehaviour
     }
 
 	/**================================
-	 * <summary> 設定每日石頭(讓玩家挑戰用的) </summary>
+	 * <summary> 取得每日石頭(讓玩家挑戰用的) </summary>
 	 *===============================*/
     public JsonData GetEveryDayNpc()
     {
@@ -145,5 +147,61 @@ public class PlayerPrefManager : MonoBehaviour
         JsonData jd = JsonMapper.ToObject(json);
         
         return jd;
+    }
+
+
+    /**================================
+     * <summary> 保存設定狀態,如果輸入的矩陣長度不是4不執行 </summary>
+     *===============================*/
+    public void SetSettings(bool[] settings)
+    {
+        if (settings.Length == 4)
+        {
+            JsonData jd = new JsonData();
+            jd["Music"] = settings[(int)SettingsName.music];
+            jd["Sound"] = settings[(int)SettingsName.sound];
+            jd["Vibrate"] = settings[(int)SettingsName.vibrate];
+            jd["Conversation"] = settings[(int)SettingsName.conversation];
+
+            string json = jd.ToJson();
+
+            PlayerPrefs.SetString("settings", json);
+        }
+    }
+
+    /**================================
+     * <summary> 讀取設定狀態 </summary>
+     *===============================*/
+    public JsonData GetSetting()
+    {
+        string json = PlayerPrefs.GetString("settings", "True");
+
+        JsonData jd = JsonMapper.ToObject(json);
+
+        return jd;
+    }
+
+    /**================================
+     * <summary> 保存音量設定 </summary>
+     *===============================*/
+
+    public void SetVolume(float[] volume)
+    {
+        PlayerPrefs.SetFloat("volMusic", volume[0]);
+        PlayerPrefs.SetFloat("volSound", volume[1]);
+    }
+
+    /**================================
+     * <summary> 讀取音量設定 </summary>
+     *===============================*/
+
+    public float[] GetVolume()
+    {
+        float[] vol = new float[2];
+
+        vol[0] = PlayerPrefs.GetFloat("volMusic", 1);
+        vol[1] = PlayerPrefs.GetFloat("volSound", 1);
+
+        return vol;
     }
 }
